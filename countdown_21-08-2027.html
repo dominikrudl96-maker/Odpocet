@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown</title>
+<style>
+  body{
+    margin:0;
+    background:transparent;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .wrap{
+    text-align:center;
+    font-weight:700;
+  }
+  .time{
+    font-size:48px;
+    letter-spacing:2px;
+  }
+  .labels{
+    font-size:14px;
+    opacity:0.7;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="time" id="countdown">--:--:--:--</div>
+  <div class="labels">days : hours : minutes : seconds</div>
+</div>
+
+<script>
+const target = new Date("2027-08-21T00:00:00");
+
+function updateCountdown(){
+  const now = new Date();
+  const diff = target - now;
+
+  if(diff <= 0){
+    document.getElementById("countdown").textContent = "00:00:00:00";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff / (1000*60*60)) % 24);
+  const minutes = Math.floor((diff / (1000*60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  const pad = n => String(n).padStart(2,"0");
+
+  document.getElementById("countdown").textContent =
+    days + ":" + pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
+}
+
+setInterval(updateCountdown,1000);
+updateCountdown();
+</script>
+</body>
+</html>
